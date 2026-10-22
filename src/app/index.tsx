@@ -1,12 +1,33 @@
-import { Text, View, StyleSheet } from "react-native";
+import { useRouter } from 'expo-router'
+import { use, useState } from 'react';
+import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
 
-export default function Index() {
-  return (
-    <View style={styles.container}>
-      <Text>Edit src/app/index.tsx to edit this screen.</Text>
-    </View>
-  );
+export default function RegistrationScreen() {
+  const router = useRouter();
+  const [userName,setUserName] = useState('');
+  const [email,setEmail] = useState('');
+  const [phoneNumber,setPhoneNumber] = useState('');
+  const [password,setPassword] = useState('');
+  const [confirmPassword,setConfirmPassword] = useState('');
+
+  const handleReview = () => {
+    if (!userName || !email || !phoneNumber || !password || !confirmPassword) {
+      Alert.alert('Error','Please fill in all fields.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Error','Passwords do not match');
+      return;
+    }
+
+    router.push({
+      pathname '/review',
+      params: { userName, email, phoneNumber}
+    })
+  }
 }
+
 
 const styles = StyleSheet.create({
   container: {
