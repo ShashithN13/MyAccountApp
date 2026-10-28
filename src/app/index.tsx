@@ -43,14 +43,7 @@ export default function RegistrationScreen() {
       <TextInput style={styles.input} placeholder="Username" value={userName} onChangeText={setUserName} />
       <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" value={email} onChangeText={setEmail} />
       <TextInput style={styles.input} placeholder="Phone Number" keyboardType="phone-pad" value={phoneNumber} onChangeText={setPhoneNumber} />
-      <TextInput
-        style={styles.input}
-        placeholder="Year of Birth"
-        keyboardType="number-pad"
-        value={yearOfBirth}
-        onChangeText={setYearOfBirth}
-        maxLength={4}
-      />
+      <TextInput style={styles.input} placeholder="Year of Birth" keyboardType="number-pad" value={yearOfBirth} onChangeText={setYearOfBirth} maxLength={4} />
       <TextInput style={styles.input} placeholder="Password" secureTextEntry value={password} onChangeText={setPassword} />
       <TextInput style={styles.input} placeholder="Confirm Password" secureTextEntry value={confirmPassword} onChangeText={setConfirmPassword} />
       <Button title="Review Details" onPress={handleReview} />
