@@ -1,20 +1,13 @@
-
-import React from 'react';
-import {
-  View,
-  Text,
-  Button,
-  Alert,
-  StyleSheet,
-} from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
+import { Button, StyleSheet, Text, View, Alert } from 'react-native';
 
 export default function ReviewScreen() {
-  const { userName, email, yearOfBirth, age } =
-    useLocalSearchParams();
+  const { userName, email, phoneNumber, yearOfBirth, age } = useLocalSearchParams();
+  const ageValue = Array.isArray(age) ? age[0] : age;
+  const calculatedAge = Number(ageValue);
 
-  const handleContinue = () => {
-    if (Number(age) < 18) {
+  const handleConfirm = () => {
+    if (!Number.isFinite(calculatedAge) || calculatedAge < 18) {
       Alert.alert(
         'Age Restriction',
         'You must be 18 years old to proceed.'
@@ -24,31 +17,25 @@ export default function ReviewScreen() {
 
     router.push({
       pathname: '/success',
-      params: { userName },
+      params: { userName: Array.isArray(userName) ? userName[0] : userName },
     });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Review Your Details</Text>
+      <Text style={styles.title}>Review Your Details</Text>
 
-      <Text>Name: {userName}</Text>
-      <Text>Email: {email}</Text>
-      <Text>Year of Birth: {yearOfBirth}</Text>
-      <Text>Age: {age}</Text>
-
-      <View style={styles.button}>
-        <Button
-          title="Go Back and Edit"
-          onPress={() => router.back()}
-        />
+      <View style={styles.card}>
+        <Text style={styles.detail}>Name: {userName}</Text>
+        <Text style={styles.detail}>Email: {email}</Text>
+        <Text style={styles.detail}>Phone: {phoneNumber || 'Not provided'}</Text>
+        <Text style={styles.detail}>Year of Birth: {Array.isArray(yearOfBirth) ? yearOfBirth[0] : yearOfBirth}</Text>
+        <Text style={styles.detail}>Age: {Number.isFinite(calculatedAge) ? calculatedAge : 'Unknown'}</Text>
       </View>
 
-      <View style={styles.button}>
-        <Button
-          title="Confirm"
-          onPress={handleContinue}
-        />
+      <View style={styles.buttonContainer}>
+        <Button title="Edit Info" color="red" onPress={() => router.back()} />
+        <Button title="Confirm & Submit" onPress={handleConfirm} />
       </View>
     </View>
   );
@@ -60,12 +47,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 25,
+  detail: {
+    fontSize: 16,
+    marginBottom: 10,
   },
-  button: {
-    marginTop: 20,
+  buttonContainer: {
+    flexDirection: 'row', justifyContent: 'space-between',
   },
+  title: {
+    fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center'
+  },
+  card: {
+    backgroundColor: '#f9f9f9', padding: 20, borderRadius: 8, marginBottom: 20
+  }
 });

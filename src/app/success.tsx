@@ -1,7 +1,5 @@
-
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function SuccessScreen() {
   const { userName } = useLocalSearchParams();
@@ -10,15 +8,11 @@ export default function SuccessScreen() {
     <View style={styles.container}>
       <Text style={styles.emoji}>✅</Text>
 
-      <Text style={styles.heading}>
-        Registration Successful!
-      </Text>
-
-      <Text style={styles.message}>
+      <Text style={styles.greeting}>
         Welcome, {userName}!
       </Text>
 
-      <Text>Your account has been created successfully.</Text>
+      <Text style={styles.subtitle}>Your account has been successfully created.</Text>
     </View>
   );
 }
@@ -34,14 +28,15 @@ const styles = StyleSheet.create({
     fontSize: 60,
     marginBottom: 20,
   },
-  heading: {
-    fontSize: 24,
+  greeting: {
+    fontSize: 28,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 15,
-  },
-  message: {
-    fontSize: 20,
+    color: 'green',
     marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#555',
+    textAlign: 'center',
   },
 });
